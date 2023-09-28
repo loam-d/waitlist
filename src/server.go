@@ -28,6 +28,11 @@ func main() {
 	e.PUT("/student/reject/:email/:name", handler.RejectOffer)
 	e.PUT("/course/timeout/:name", handler.TimeOutOffers)
 	e.PUT("/course/complete/:name", handler.CompleteCourse)
+	e.GET("/course", handler.GetAllCourses)
+	e.GET("/course/:name", handler.GetCourse)
+	e.GET("/student", handler.GetAllStudents)
+	e.GET("/student/:email", handler.GetStudent)
+	e.GET("/enrollments", handler.GetAllEnrollments)
 
 	e.Logger.Fatal(e.Start(":1323"))
 }

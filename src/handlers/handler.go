@@ -141,3 +141,50 @@ func (h *Handler) CompleteCourse(c echo.Context) error {
 	}
 	return c.String(http.StatusOK, fmt.Sprintf("course %s had %d students complete it", courseName, len(enrollments)))
 }
+
+func (h *Handler) GetAllCourses(c echo.Context) error {
+	var courses []models.Course
+	result := h.DB.Find(&courses)
+	if result.Error != nil {
+		return c.String(http.StatusInternalServerError, "courses retrieval failed")
+	}
+	return c.JSON(http.StatusOK, courses)
+}
+
+func (h *Handler) GetCourse(c echo.Context) error {
+	courseName := c.Param("name")
+	var course models.Course
+	result := h.DB.Where("name = ?", courseName).First(&course)
+	if result.Error != nil {
+		return c.String(http.StatusInternalServerError, "course retrieval failed")
+	}
+	return c.JSON(http.StatusOK, course)
+}
+
+func (h *Handler) GetAllStudents(c echo.Context) error {
+	var students []models.Student
+	result := h.DB.Find(&students)
+	if result.Error != nil {
+		return c.String(http.StatusInternalServerError, "students retrieval failed")
+	}
+	return c.JSON(http.StatusOK, students)
+}
+
+func (h *Handler) GetStudent(c echo.Context) error {
+	studentEmail := c.Param("email")
+	var student models.Student
+	result := h.DB.Where("name = ?", studentEmail).First(&student)
+	if result.Error != nil {
+		return c.String(http.StatusInternalServerError, "student retrieval failed")
+	}
+	return c.JSON(http.StatusOK, student)
+}
+
+func (h *Handler) GetAllEnrollments(c echo.Context) error {
+	var enrollment []models.Enrollment
+	result := h.DB.Find(&enrollment)
+	if result.Error != nil {
+		return c.String(http.StatusInternalServerError, "students retrieval failed")
+	}
+	return c.JSON(http.StatusOK, enrollment)
+}
